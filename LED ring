@@ -3,3 +3,35 @@ https://www.tinkercad.com/things/0EonD1ZO4ax-editing-components/editel?returnTo=
 */
 //With the help of Arduino and an LED ring, make a running light algorithm, where only one light runs on the first circle, two on the second, and so on. EN
 //За допомогою Arduino та світлодіодного кільця зробити алгоритм бігаючого вогника, де на першому колі біжить тільки один вогник, на другому - два і так далі. UA
+
+#include <Adafruit_NeoPixel.h> // Бібліотека
+
+#define LED_PIN 13
+#define LED_COUNT 24
+
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+void setup () {
+  strip.begin(); // Ініціалізація бібліотеки
+    strip.clear(); // Очищення всіх світлодіодів на початку програми
+}
+
+void loop () {
+//setLighting(10, 5);
+    for (int i = 0; i < LED_COUNT; i++){ // Зовнішній цикл для кожного світлодіода
+      //strip.setPixelColor(i, 0, 255, 0);
+        //strip.show();  
+      for (int j = 0; j < LED_COUNT; j++){ // Внутрішній цикл
+            setLighting(i, j);
+            delay(100);
+            strip.clear();
+        }  
+    }   
+}
+void setLighting(byte a, byte pos){
+    for (int i = 0; i < a; i++){ // Внутрішня функція
+    strip.setPixelColor(pos, 0, 255, 0); // КОлір
+        strip.show(); // Показ кольору
+        pos++;
+    }
+}
